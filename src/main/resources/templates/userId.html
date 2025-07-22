@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+	<head>
+		<title> Specific Users</title>
+	</head>
+	<body>
+		<h1>User</h1>
+		
+		<div th:each="specificUser: ${user}"> 
+		<div ><span th:text=${specificUser.username}></span> </div>
+		<div ><span th:text=${specificUser.name}></span> </div>
+		<div > <span th:text=${specificUser.password}></span> </div>
+		<br><br>
+	 <h2> Address</h2>
+	 <div th:each="address:${addresses}"></div>
+	 
+	
+	
+	
+<!-- 		<div th:text=${specificUser.address}> </div> -->
+		</div>
+		
+		
+		
+		
+		
+		</body>
+		
+		
+		</html>
