@@ -2,6 +2,7 @@ package com.coderscampus.assignment13.web;
 
 import java.util.Arrays;
 import java.util.Set;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,8 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.coderscampus.assignment13.domain.Account;
+//import com.coderscampus.assignment13.domain.Account;
+import com.coderscampus.assignment13.domain.Address;
 import com.coderscampus.assignment13.domain.User;
+import com.coderscampus.assignment13.service.AddressService;
 import com.coderscampus.assignment13.service.UserService;
 
 @Controller
@@ -19,20 +22,32 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private AddressService addressService;
+	
 	
 	
 	@GetMapping("/register")
+	
 	public String getCreateUser (ModelMap model) {
 		
 		model.put("user", new User());
+		model.put("address", new Address());
+//		model.put("account", user.getAccounts().get(0).toString());
 		
 		return "register";
 	}
 	
 	@PostMapping("/register")
 	public String postCreateUser (User user) {
+		
 		System.out.println(user);
-		userService.saveUser(user, user.getAccounts().get(0).toString());
+		
+//		userService.addAccount(user, user.getAccounts().get(0).toString());
+		// addAccountToUser- rename at some point
+		
+		userService.addAddress(user );
+		userService.saveUser(user);
 		return "redirect:/register";
 	}
 	
@@ -58,8 +73,8 @@ public class UserController {
 	
 	@PostMapping("/users/{userId}")
 	public String postOneUser (User user) {
-		userService.saveUser(user,user.getAccounts().get(0).toString());
-		userService.saveUser(user, user.getAddress().toString());
+		userService.saveUser(user);
+		
 		return "redirect:/users/"+user.getUserId();
 	}
 	

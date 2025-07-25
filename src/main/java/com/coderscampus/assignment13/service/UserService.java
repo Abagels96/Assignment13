@@ -9,69 +9,62 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.coderscampus.assignment13.domain.Account;
+import com.coderscampus.assignment13.domain.Address;
 import com.coderscampus.assignment13.domain.User;
 import com.coderscampus.assignment13.repository.AccountRepository;
+import com.coderscampus.assignment13.repository.AddressRepository;
 import com.coderscampus.assignment13.repository.UserRepository;
 
 @Service
 public class UserService {
-	
+
 	@Autowired
 	private UserRepository userRepo;
 	@Autowired
 	private AccountRepository accountRepo;
-	
-	public List<User> findByUsername(String username) {
-		return userRepo.findByUsername(username);
-	}
-	
-	public List<User> findByNameAndUsername(String name, String username) {
-		return userRepo.findByNameAndUsername(name, username);
-	}
-	
-	public List<User> findByCreatedDateBetween(LocalDate date1, LocalDate date2) {
-		return userRepo.findByCreatedDateBetween(date1, date2);
-	}
-	
-	public User findExactlyOneUserByUsername(String username) {
-		List<User> users = userRepo.findExactlyOneUserByUsername(username);
-		if (users.size() > 0)
-			return users.get(0);
-		else
-			return new User();
-	}
-	
-	public Set<User> findAll () {
+	@Autowired
+	private AddressRepository addressRepo;
+
+	public Set<User> findAll() {
 		return userRepo.findAllUsersWithAccountsAndAddresses();
 	}
-	
+
 	public User findById(Long userId) {
 		Optional<User> userOpt = userRepo.findById(userId);
 		return userOpt.orElse(new User());
 	}
 
-	public User saveUser(User user,String nameOfAccount) {
-		addAccount(user,nameOfAccount);
-		
-		
+	public User saveUser(User user) {
+
 		return userRepo.save(user);
 	}
 
-	public void addAccount(User user,String nameOfAccount) {
+	public void addAccount(User user, String nameOfAccount) {
 		if (user.getUserId() == null) {
-			Account placeholder= new Account();
+			Account placeholder = new Account();
 			placeholder.setAccountName(nameOfAccount);
-			placeholder.getUsers().add(user);
-			
+			placeholder.getUsers().add(user);// I got to find out why Trevor did getusers.add instead of setUsers
+			// fix name of placeholder so Kevin is happy
 			user.getAccounts().add(placeholder);
 			accountRepo.save(placeholder);
-		
+
 		}
-			
+
 	}
-public void addAddress(User user, String address) {
-	
-}
+
+	public Address addAddress(User user) {
+
+		Address address = new Address();// address is null for some reason and it is irritating for sure
+		address.setUser(user);
+		if (user.getUserId() == null) {
+			user.setAddress(address);
+			addressRepo.save(address);
+
+		}
+		return address;
+
+	}
+
 	public void delete(Long userId) {
 		userRepo.deleteById(userId);
 	}
