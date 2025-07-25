@@ -43,11 +43,14 @@ public class UserController {
 		
 		System.out.println(user);
 		
-//		userService.addAccount(user, user.getAccounts().get(0).toString());
-		// addAccountToUser- rename at some point
 		
-		userService.addAddress(user );
+		// addAccountToUser- rename at some point
+		if( user.getUserId()==null) {
+		userService.addAddress(user);
+	 addressService.saveAddress(user.getAddress()); 
 		userService.saveUser(user);
+		}
+//		userService.addAccount(user, user.getAccounts().add(0, null));
 		return "redirect:/register";
 	}
 	
