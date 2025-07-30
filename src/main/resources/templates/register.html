@@ -6,35 +6,35 @@
 <body>
 	<h1>Create Your Account</h1>
 
-	<form action="@{/register}" method="post" th:object="${address}">
+	<form action="@{/register}" method="post" th:object="${user}">
 		<div>
-			Username: <input type="text" th:field="${user.username}" />
+			Username: <input type="text" th:field="*{username}" />
 		</div>
 		<div>
-			Password: <input type="password" th:field="${user.password}" />
+			Password: <input type="password" th:field="*{password}" />
 		</div>
 		<div>
-			Full Name: <input type="text" th:field="${user.name}" />
+			Full Name: <input type="text" th:field="*{name}" />
 		</div>
 		<div>
 			Address Line 1: <input type="text"
-				th:field="${user.address.addressLine1}" />
+				th:field="*{address.addressLine1}" />
 		</div>
 		<div>
 			Address Line 2: <input type="text"
-				th:field="${user.address.addressLine2}" />
+				th:field="*{address.addressLine2}" />
 		</div>
 		<div>
-			City: <input type="text" th:field="${user.address.city}" />
+			City: <input type="text" th:field="*{address.city}" />
 		</div>
 		<div>
-			Region: <input type="text" th:field="${user.address.region}" />
+			Region: <input type="text" th:field="*{address.region}" />
 		</div>
 		<div>
-			Country: <input type="text" th:field="${user.address.country}" />
+			Country: <input type="text" th:field="*{address.country}" />
 		</div>
 		<div>
-			Zip Code: <input type="text" th:field="${user.address.zipCode}" />
+			Zip Code: <input type="text" th:field="*{address.zipCode}" />
 		</div>
 		<br>
 		<!-- 				<div> -->

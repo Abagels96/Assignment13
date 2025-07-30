@@ -1,7 +1,6 @@
 package com.coderscampus.assignment13.service;
 
-import java.time.LocalDate;
-import java.util.List;
+
 import java.util.Optional;
 import java.util.Set;
 
@@ -68,4 +67,5 @@ public class UserService {
 	public void delete(Long userId) {
 		userRepo.deleteById(userId);
 	}
+
 }

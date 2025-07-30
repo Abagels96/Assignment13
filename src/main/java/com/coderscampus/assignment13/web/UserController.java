@@ -2,11 +2,10 @@ package com.coderscampus.assignment13.web;
 
 import java.util.Arrays;
 import java.util.Set;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 //import com.coderscampus.assignment13.domain.Account;
 import com.coderscampus.assignment13.domain.Address;
 import com.coderscampus.assignment13.domain.User;
-import com.coderscampus.assignment13.service.AddressService;
 import com.coderscampus.assignment13.service.UserService;
 
 @Controller
@@ -24,14 +22,14 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private AddressService addressService;
 
 	@GetMapping("/register")
 
 	public String getCreateUser(ModelMap model) {
-
-		model.put("user", new User());
-		model.put("address", new Address());
+     User user= new User();
+   user.setAddress(new Address());
+		model.put("user", user);
+	
 //		model.put("account", user.getAccounts().get(0).toString());
 
 		return "register";
@@ -41,13 +39,9 @@ public class UserController {
 	public String postCreateUser(@ModelAttribute User user) {
 
 		System.out.println(user);
-
-		// addAccountToUser- rename at some point
-		if (user.getUserId() == null) {
-//		userService.addAddress(user);
-			addressService.saveAddress(user.getAddress());
-			userService.saveUser(user);
-		}
+ if(user.getAddress()!= null) {
+	 userService.addAddress(user);
+ }
 //		userService.addAccount(user, user.getAccounts().add(0, null));
 		return "redirect:/register";
 	}
