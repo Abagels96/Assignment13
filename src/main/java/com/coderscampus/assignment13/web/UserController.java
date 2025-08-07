@@ -21,7 +21,6 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-	@Autowired
 
 	@GetMapping("/register")
 
@@ -41,7 +40,7 @@ public class UserController {
 		System.out.println(user);
  if(user.getAddress()!= null) {
 	 userService.addAddress(user);
- }
+ }// addressService not being called 
 //		userService.addAccount(user, user.getAccounts().add(0, null));
 		return "redirect:/register";
 	}

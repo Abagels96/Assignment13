@@ -55,11 +55,11 @@ public class UserService {
 
 		Address address = new Address();// address is null for some reason and it is irritating for sure
 		address.setUser(user);
-		if (user.getUserId() == null) {
+		
 			user.setAddress(address);
 			addressRepo.save(address);
 
-		}
+	
 		return address;
 
 	}
