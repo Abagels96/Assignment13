@@ -43,14 +43,9 @@
 			<exclusions>
 				<exclusion>
 					<groupId>org.junit.vintage</groupId>
-					<artifactId>junit-vintage-engine</artifactId>
+					<artifactId>junit-vintage-engizne</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>com.coders.campus.week18</groupId>
-			<artifactId>hibernateExample</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

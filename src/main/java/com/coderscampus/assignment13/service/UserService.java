@@ -1,4 +1,4 @@
-package com.coderscampus.assignment13.service;
+package com.coderscampus.assignment13.service; 
 
 
 import java.util.List;
@@ -38,10 +38,31 @@ public class UserService {
 System.out.println(user);
 
 		return userRepo.save(user);
-		
-		
 	}
 
+	public void addAccount(User user, String nameOfAccount) {
+		if (user.getUserId() == null) {
+			Account placeholder = new Account();
+			placeholder.setAccountName(nameOfAccount);
+			placeholder.getUsers().add(user);// I got to find out why Trevor did getusers.add instead of setUsers
+			// fix name of placeholder so Kevin is happy
+			user.getAccounts().add(placeholder);
+			accountRepo.save(placeholder);
+
+		}
+
+	}
+
+	public Address addAddress(User user) {
+
+		Address address = new Address();// address is null for some reason and it is irritating for sure
+		address.setUser(user);
+		
+			user.setAddress(address);
+			addressRepo.save(address);
+
+	
+		return address;
 	public void delete(Long userId) {
 		userRepo.deleteById(userId);
 	}

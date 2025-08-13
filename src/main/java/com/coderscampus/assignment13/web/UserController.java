@@ -38,19 +38,10 @@ public class UserController {
 	@PostMapping("/register")
 	public String postCreateUser(User user) {
 		System.out.println(user);
-		if (user.getAddress() != null) {
-			Address address = user.getAddress();
-			address.setUser(user);
-
-		}
-		userService.saveUser(user);
-		if (user.getAccounts() != null) {
-			List<Account> account = new ArrayList<>();
-			userService.addAccount(user, account);
-			userService.saveUser(user);
-
-		}
-
+ if(user.getAddress()!= null) {
+	 userService.addAddress(user);
+ }// addressService not being called 
+//		userService.addAccount(user, user.getAccounts().add(0, null));
 		return "redirect:/register";
 	}
 
