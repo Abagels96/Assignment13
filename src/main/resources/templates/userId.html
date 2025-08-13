@@ -6,31 +6,56 @@
 <body>
 	<h1>User</h1>
 
-	<div th:each="specificUser: ${user}">
+	<form th:action="@{/users/{userId}(userId=${user.userId})}"
+		method="post" th:object="${user}">
 		<div>
-			<span th:text=${specificUser.username}></span>
+			Username: <input type="text" th:field="*{username}" />
 		</div>
 		<div>
-			<span th:text=${specificUser.name}></span>
+			Password: <input type="password" th:field="*{password}" />
 		</div>
 		<div>
-			<span th:text=${specificUser.password}></span>
+			Full Name: <input type="text" th:field="*{name}" />
+		</div>
+		<div>
+			<h2>Address</h2>
+			Address Line 1: <input type="text" th:field="*{address.addressLine1}" />
+		</div>
+		<div>
+			Address Line 2: <input type="text" th:field="*{address.addressLine2}" />
+		</div>
+		<div>
+			City: <input type="text" th:field="*{address.city}" />
+		</div>
+		<div>
+			Region: <input type="text" th:field="*{address.region}" />
+		</div>
+		<div>
+			Country: <input type="text" th:field="*{address.country}" />
+		</div>
+		<div>
+			Zip Code: <input type="text" th:field="*{address.zipCode}" />
+		</div>
+
+		<div th:each="account : ${user.accounts}">
+			<span th:text="${account.accountName}"></span>
 		</div>
 		<br>
+		<div th:action="@{/users}">
+			<button value=Update>Update Account</button>
+		</div>
+
 		<br>
-		<h2>Address</h2>
-		<div th:each="address:${addresses}"></div>
+		<div th:action="@{/users}">
+			<button value=Delete>Delete Account</button>
+		</div>
 
 
-
-
-		<!-- 		<div th:text=${specificUser.address}> </div> -->
-	</div>
-
-
-
-
-
+		<h2>Accounts</h2>
+		<!-- spot to put accounts when they get created -->
+		<button value=Create>Add Account</button>
+		
+	</form>
 </body>
 
 

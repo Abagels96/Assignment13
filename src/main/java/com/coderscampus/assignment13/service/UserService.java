@@ -1,6 +1,7 @@
 package com.coderscampus.assignment13.service;
 
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -34,38 +35,30 @@ public class UserService {
 	}
 
 	public User saveUser(User user) {
+System.out.println(user);
 
 		return userRepo.save(user);
-	}
-
-	public void addAccount(User user, String nameOfAccount) {
-		if (user.getUserId() == null) {
-			Account placeholder = new Account();
-			placeholder.setAccountName(nameOfAccount);
-			placeholder.getUsers().add(user);// I got to find out why Trevor did getusers.add instead of setUsers
-			// fix name of placeholder so Kevin is happy
-			user.getAccounts().add(placeholder);
-			accountRepo.save(placeholder);
-
-		}
-
-	}
-
-	public Address addAddress(User user) {
-
-		Address address = new Address();// address is null for some reason and it is irritating for sure
-		address.setUser(user);
-		if (user.getUserId() == null) {
-			user.setAddress(address);
-			addressRepo.save(address);
-
-		}
-		return address;
-
+		
+		
 	}
 
 	public void delete(Long userId) {
 		userRepo.deleteById(userId);
+	}
+
+	public void addAccount(User user, List<Account> accounts) {
+		user.setAccounts(accounts);
+		userRepo.save(user);
+	}
+
+	public void update(Long userId, User user) {
+		// add null checks to this 
+		userRepo.findById(userId);
+		userRepo.setUserInfoById(null, null, null, null);
+		// I need to make a method to update data right here
+		userRepo.save(user);
+		// TODO Auto-generated method stub
+		
 	}
 
 }
