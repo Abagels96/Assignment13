@@ -17,7 +17,6 @@ import com.coderscampus.assignment13.domain.Account;
 //import com.coderscampus.assignment13.domain.Account;
 import com.coderscampus.assignment13.domain.Address;
 import com.coderscampus.assignment13.domain.User;
-import com.coderscampus.assignment13.service.AddressService;
 import com.coderscampus.assignment13.service.UserService;
 
 @Controller
@@ -68,9 +67,9 @@ public class UserController {
 	}
 
 	@PostMapping("/users/{userId}")
-	public String postOneUser(User user) {
-		userService.saveUser(user);
-        
+	public String postOneUser(User user,Address newAddress) {
+		
+           userService.update(user.getUserId(), user.getName(), user.getUsername(), user.getPassword(), newAddress.getAddressLine1(),newAddress.getAddressLine2(), newAddress.getCity(), newAddress.getRegion(),newAddress.getCountry(),newAddress.getZipCode() );
 		return "redirect:/users/" + user.getUserId();
 	}
 

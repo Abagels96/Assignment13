@@ -63,6 +63,7 @@ System.out.println(user);
 
 	
 		return address;
+	}
 	public void delete(Long userId) {
 		userRepo.deleteById(userId);
 	}
@@ -72,12 +73,30 @@ System.out.println(user);
 		userRepo.save(user);
 	}
 
-	public void update(Long userId, User user) {
-		// add null checks to this 
-		userRepo.findById(userId);
-		userRepo.setUserInfoById(null, null, null, null);
+	public void update(Long userId, String name,String username,String password,String address1,String address2,String region,
+		String country,String city, String zipCode) {
+		User user= userRepo.findById(userId).orElseThrow();// add null checks to this 
+		user.setName(name);
+		user.setUsername(username);
+		user.setPassword(password);
+		
+	 Address address= user.getAddress();
+	 if(user.getAddress()==null) {
+			 address= new Address();
+			user.setAddress(address);
+		}
+	
+	// this might be the cause of the problem. 
+	address.setAddressLine1(address1);
+	address.setAddressLine2(address2);
+	address.setRegion(region);
+	address.setCity(city);
+	address.setCountry(country);
+	address.setCity(city);
+	address.setZipCode(zipCode);
 		// I need to make a method to update data right here
 		userRepo.save(user);
+		addressRepo.save(address);
 		// TODO Auto-generated method stub
 		
 	}
