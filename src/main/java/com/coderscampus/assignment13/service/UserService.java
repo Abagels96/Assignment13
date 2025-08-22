@@ -79,24 +79,28 @@ System.out.println(user);
 		user.setName(name);
 		user.setUsername(username);
 		user.setPassword(password);
+		 Address address= new Address();
+		address.setAddressLine1(address1);
+		address.setAddressLine2(address2);
+		address.setRegion(region);
+		address.setCity(city);
+		address.setCountry(country);
+		address.setCity(city);
+		address.setZipCode(zipCode);
 		
-	 Address address= user.getAddress();
+		user.setAddress(address);
+			// I need to make a method to update data right here
+			userRepo.save(user);
+			addressRepo.save(address);
+		
+	
 	 if(user.getAddress()==null) {
 			 address= new Address();
 			user.setAddress(address);
 		}
 	
 	// this might be the cause of the problem. 
-	address.setAddressLine1(address1);
-	address.setAddressLine2(address2);
-	address.setRegion(region);
-	address.setCity(city);
-	address.setCountry(country);
-	address.setCity(city);
-	address.setZipCode(zipCode);
-		// I need to make a method to update data right here
-		userRepo.save(user);
-		addressRepo.save(address);
+	
 		// TODO Auto-generated method stub
 		
 	}
