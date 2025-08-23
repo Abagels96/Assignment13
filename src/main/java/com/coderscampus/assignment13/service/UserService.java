@@ -1,5 +1,4 @@
-package com.coderscampus.assignment13.service; 
-
+package com.coderscampus.assignment13.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +34,7 @@ public class UserService {
 	}
 
 	public User saveUser(User user) {
-System.out.println(user);
+		System.out.println(user);
 
 		return userRepo.save(user);
 	}
@@ -57,13 +56,13 @@ System.out.println(user);
 
 		Address address = new Address();// address is null for some reason and it is irritating for sure
 		address.setUser(user);
-		
-			user.setAddress(address);
-			addressRepo.save(address);
 
-	
+		user.setAddress(address);
+		addressRepo.save(address);
+
 		return address;
 	}
+
 	public void delete(Long userId) {
 		userRepo.deleteById(userId);
 	}
@@ -73,36 +72,28 @@ System.out.println(user);
 		userRepo.save(user);
 	}
 
-	public void update(Long userId, String name,String username,String password,String address1,String address2,String region,
-		String country,String city, String zipCode) {
-		User user= userRepo.findById(userId).orElseThrow();// add null checks to this 
-		user.setName(name);
-		user.setUsername(username);
-		user.setPassword(password);
-		 Address address= new Address();
-		address.setAddressLine1(address1);
-		address.setAddressLine2(address2);
-		address.setRegion(region);
-		address.setCity(city);
-		address.setCountry(country);
-		address.setCity(city);
-		address.setZipCode(zipCode);
-		
-		user.setAddress(address);
-			// I need to make a method to update data right here
-			userRepo.save(user);
-			addressRepo.save(address);
-		
-	
-	 if(user.getAddress()==null) {
-			 address= new Address();
-			user.setAddress(address);
+	public void update(Long userId) {
+		System.out.println("hello");
+		User user = userRepo.findById(userId).orElseThrow();// add null checks to this
+
+		System.out.println(user);
+		Address address = user.getAddress();
+		addressRepo.save(address);
+		if (user.getAddress() == null) {
+			Address address1 = new Address();
+			System.out.println(address1);
+			user.setAddress(address1);
 		}
-	
-	// this might be the cause of the problem. 
-	
-		// TODO Auto-generated method stub
+
+		System.out.println(address);
+
+		userRepo.save(user);
 		
+		}
+
+
+		// TODO Auto-generated method stub
+
 	}
 
-}
+

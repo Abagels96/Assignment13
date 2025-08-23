@@ -60,17 +60,16 @@ public class UserController {
 	public String getOneUser(ModelMap model, @PathVariable Long userId) {
 		User user = userService.findById(userId);
 		Address newAddress = user.getAddress();
-		model.put("users", Arrays.asList(user));
 		model.put("user", user);
 		model.put("address", newAddress);
 		return "userId";
 	}
 
 	@PostMapping("/users/{userId}")
-	public String postOneUser(User user,Address newAddress) {
-		
-           userService.update(user.getUserId(), user.getName(), user.getUsername(), user.getPassword(), newAddress.getAddressLine1(),newAddress.getAddressLine2(), newAddress.getCity(), newAddress.getRegion(),newAddress.getCountry(),newAddress.getZipCode() );
-		return "redirect:/users/" + user.getUserId();
+	public String postOneUser( @PathVariable Long userId) {
+		System.out.println("Hello");
+           userService.update(userId );
+		return "redirect:/users";
 	}
 
 	@PostMapping("/users/{userId}/delete")
