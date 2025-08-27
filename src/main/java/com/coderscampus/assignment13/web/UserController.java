@@ -66,16 +66,16 @@ public class UserController {
 	}
 
 	@PostMapping("/users/{userId}")
-	public String postOneUser( @PathVariable Long userId) {
-		System.out.println("Hello");
-           userService.update(userId );
+	public String postOneUser( @PathVariable Long userId, @ModelAttribute User user) {
+           userService.update(userId,user);
 		return "redirect:/users";
 	}
 
 	@PostMapping("/users/{userId}/delete")
 	public String deleteOneUser(@PathVariable Long userId) {
+		System.out.println("boo");
 		userService.delete(userId);
-		return "redirect:/users";
+		return "redirect:/users/{userId}";
 	}
 
 //	@PostMapping("/users/{userId}/update")

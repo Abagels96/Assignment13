@@ -7,7 +7,7 @@
 	<h1>User</h1>
 
 	<form th:action="@{/users/{userId}(userId=${user.userId})}"
-		method="post" th:object="${user}">
+		th:method="delete" th:object="${user}">
 		<div>
 			Username: <input type="text" th:field="*{username}" />
 		</div>
@@ -46,16 +46,19 @@
 		</div>
 
 		<br>
-		<div th:action="@{/users}">
-			<button value=Delete>Delete Account</button>
-		</div>
+		
+		</form>
+	<form action="post" th:action="@{'/users/{userId}/delete}'(userId=${user.userId})}" th:method="delete" >
+  <button type="submit" id="submitButton"> Delete Account </button>
+</form>
+			
 
 
 		<h2>Accounts</h2>
 		<!-- spot to put accounts when they get created -->
-		<button value=Create>Add Account</button>
+		<button type="submit">Add Account</button>
 		
-	</form>
+	
 </body>
 
 

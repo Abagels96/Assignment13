@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -72,27 +73,44 @@ public class UserService {
 		userRepo.save(user);
 	}
 
-	public void update(Long userId) {
+	public void update(Long userId, User newUser) {
 		System.out.println("hello");
-		User user = userRepo.findById(userId).orElseThrow();// add null checks to this
+	User user = userRepo.findById(userId).orElseThrow();// add exception but this 
+	// line selects the user in the database by Id and then I vainly try to edit it in the browser.
 
-		System.out.println(user);
-		Address address = user.getAddress();
-		addressRepo.save(address);
-		if (user.getAddress() == null) {
-			Address address1 = new Address();
-			System.out.println(address1);
-			user.setAddress(address1);
+	user.setName(newUser.getName());
+	user.setUsername(newUser.getUsername());
+	user.setPassword(newUser.getPassword());
+	
+	 
+	System.out.println(user);// this should print the user displayed in the browser
+		Address userAddress= user.getAddress();
+		Address newUserAddress= newUser.getAddress();
+		
+		
+		if (userAddress== null) {
+			Address address= new Address();
+			address.setUser(user);// check if address is null and loads a new address needs to save it
+			user.setAddress(address); // set new address to user object loaded from the form?
+			System.out.println(address);
 		}
+		// always use the db object not the form object 
+	userAddress.setAddressLine1(newUserAddress.getAddressLine1());
+	userAddress.setAddressLine2(newUserAddress.getAddressLine2());
+	userAddress.setRegion(newUserAddress.getRegion());
+	userAddress.setCity(newUserAddress.getCity());
+	userAddress.setCountry(newUserAddress.getCountry());
+	userAddress.setZipCode(newUserAddress.getZipCode());
+		 
+		userRepo.save(user); // the full user object is saved
+		
 
-		System.out.println(address);
-
-		userRepo.save(user);
+		
 		
 		}
 
 
-		// TODO Auto-generated method stub
+		
 
 	}
 
