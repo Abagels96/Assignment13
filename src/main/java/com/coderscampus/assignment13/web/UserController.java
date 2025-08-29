@@ -24,6 +24,7 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	List<Account> accounts;
 
 	@GetMapping("/register")
 	public String getCreateUser(ModelMap model) {
@@ -37,9 +38,9 @@ public class UserController {
 	@PostMapping("/register")
 	public String postCreateUser(User user) {
 		System.out.println(user);
- if(user.getAddress()!= null) {
-	 userService.addAddress(user);
- }// addressService not being called 
+		if (user.getAddress() != null) {
+			userService.addAddress(user);
+		} // addressService not being called
 //		userService.addAccount(user, user.getAccounts().add(0, null));
 		return "redirect:/register";
 	}
@@ -59,28 +60,34 @@ public class UserController {
 	@GetMapping("/users/{userId}")
 	public String getOneUser(ModelMap model, @PathVariable Long userId) {
 		User user = userService.findById(userId);
+		List<Account> accounts= user.getAccounts();
 		Address newAddress = user.getAddress();
 		model.put("user", user);
+		model.put("accounts", accounts);
 		model.put("address", newAddress);
 		return "userId";
 	}
 
 	@PostMapping("/users/{userId}")
-	public String postOneUser( @PathVariable Long userId, @ModelAttribute User user) {
-           userService.update(userId,user);
+	public String postOneUser(@PathVariable Long userId, @ModelAttribute User user) {
+		userService.update(userId, user);
 		return "redirect:/users";
 	}
 
 	@PostMapping("/users/{userId}/delete")
 	public String deleteOneUser(@PathVariable Long userId) {
-		System.out.println("boo");
 		userService.delete(userId);
-		return "redirect:/users/{userId}";
+		return "redirect:/users";
 	}
+	
+	
+@PostMapping("/users/{userId}/accounts") 
+public String addCheckingOrSaving(@ModelAttribute User user) {
+	
+	System.out.println("booyah");
+	userService.addAccount(user);
+	return "redirect:/users/{userId}";
+}
 
-//	@PostMapping("/users/{userId}/update")
-//	public String updateOneUser(@PathVariable Long userId) {
-//		userService.update(userId);
-//		return "redirect:/users/{userId}";
-//	}
+
 }

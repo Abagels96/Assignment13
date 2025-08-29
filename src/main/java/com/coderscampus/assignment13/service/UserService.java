@@ -21,9 +21,9 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepo;
 	@Autowired
-	private AccountRepository accountRepo;
-	@Autowired
 	private AddressRepository addressRepo;
+	@Autowired
+	private AccountRepository accountRepo;
 
 	public Set<User> findAll() {
 		return userRepo.findAllUsersWithAccountsAndAddresses();
@@ -40,16 +40,15 @@ public class UserService {
 		return userRepo.save(user);
 	}
 
-	public void addAccount(User user, String nameOfAccount) {
-		if (user.getUserId() == null) {
-			Account placeholder = new Account();
-			placeholder.setAccountName(nameOfAccount);
-			placeholder.getUsers().add(user);// I got to find out why Trevor did getusers.add instead of setUsers
-			// fix name of placeholder so Kevin is happy
-			user.getAccounts().add(placeholder);
-			accountRepo.save(placeholder);
+	public void addAccount(User user) {
+		 
+			Account newAccount = new Account();
+			newAccount.getUsers().add(user);
+			user.getAccounts().add(newAccount);
+			accountRepo.save(newAccount);
+			userRepo.save(user);
 
-		}
+		
 
 	}
 
@@ -60,7 +59,7 @@ public class UserService {
 
 		user.setAddress(address);
 		addressRepo.save(address);
-
+        
 		return address;
 	}
 
@@ -68,10 +67,7 @@ public class UserService {
 		userRepo.deleteById(userId);
 	}
 
-	public void addAccount(User user, List<Account> accounts) {
-		user.setAccounts(accounts);
-		userRepo.save(user);
-	}
+	
 
 	public void update(Long userId, User newUser) {
 		System.out.println("hello");
