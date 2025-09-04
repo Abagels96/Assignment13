@@ -36,37 +36,46 @@
 		<div>
 			Zip Code: <input type="text" th:field="*{address.zipCode}" />
 		</div>
-
-		<div th:each="account : ${user.accounts}">
-			<span th:text="${account.accountName}"></span>
-		</div>
 		<br>
 		<div>
 			<button type="submit">Update Account</button>
 		</div>
 
 		<br>
-		
-		</form>
-	<form th:action="@{/users/{userId}/delete(userId=${user.userId})}" method="post" >
-	<input type="hidden" name="_method" value="delete"/>
-  <button type="submit" id="submitButton"> Delete Account </button>
-</form>
-			
 
-<form th:action="@{/users/{userId}/accounts(userId=${user.userId})}"
-			method="post">
+	</form>
+	<form th:action="@{/users/{userId}/delete(userId=${user.userId})}"
+		method="post">
+		<input type="hidden" name="_method" value="delete" />
+		<button type="submit" id="submitButton">Delete Account</button>
+	</form>
+
+
+	<form th:action="@{/users/{userId}/accounts(userId=${user.userId})}"
+		method="post">
 		<h2>Accounts</h2>
-		
-		<div th:each= "account: ${accounts}">
-		<span th:if="${accounts!=null}" th:text="${account.accountName}"></span> <span th:unless="${accounts!=null}"></span>
-		
+
+		<div th:each="account: ${accounts}"th:if="${#lists.size(accounts)>10}">
+			<span  th:text="${account.accountName}"></span><br>
+			<span th:text="${account.accountName}"></span>
+			<span th:text="${account.accountName}"></span>
+			<span th:text="${account.accountName}"></span>
+			<span th:text="${account.accountName}"></span>
+			<span th:text="${account.accountName}"></span>
+			<span th:text="${account.accountName}"></span>
+			<span th:text="${account.accountName}"></span>
+			<span th:text="${account.accountName}"></span>
+			<span th:text="${account.accountName}"></span>
 			
-	</div>
+			<span th:if="${#lists.size(accounts)=0}"></span>
+
+
+		</div>
 		<button type="submit">Add Account</button>
-		</form>
-		
 	
+	</form>
+
+
 </body>
 
 

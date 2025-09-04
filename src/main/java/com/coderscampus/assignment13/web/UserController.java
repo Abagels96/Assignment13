@@ -24,7 +24,7 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-	List<Account> accounts;
+
 
 	@GetMapping("/register")
 	public String getCreateUser(ModelMap model) {
@@ -40,8 +40,7 @@ public class UserController {
 		System.out.println(user);
 		if (user.getAddress() != null) {
 			userService.addAddress(user);
-		} // addressService not being called
-//		userService.addAccount(user, user.getAccounts().add(0, null));
+		}
 		return "redirect:/register";
 	}
 
@@ -60,7 +59,7 @@ public class UserController {
 	@GetMapping("/users/{userId}")
 	public String getOneUser(ModelMap model, @PathVariable Long userId) {
 		User user = userService.findById(userId);
-		List<Account> accounts= user.getAccounts();
+		List<Account> accounts = user.getAccounts();
 		Address newAddress = user.getAddress();
 		model.put("user", user);
 		model.put("accounts", accounts);
@@ -68,8 +67,9 @@ public class UserController {
 		return "userId";
 	}
 
-	@PostMapping("/users/{userId}")
+	@PostMapping("/users/{userId}") // probably the culprit to this problem
 	public String postOneUser(@PathVariable Long userId, @ModelAttribute User user) {
+		System.out.println(user);
 		userService.update(userId, user);
 		return "redirect:/users";
 	}
@@ -79,15 +79,13 @@ public class UserController {
 		userService.delete(userId);
 		return "redirect:/users";
 	}
-	
-	
-@PostMapping("/users/{userId}/accounts") 
-public String addCheckingOrSaving(@ModelAttribute User user) {
-	
-	System.out.println("booyah");
-	userService.addAccount(user);
-	return "redirect:/users/{userId}";
-}
 
+	@PostMapping("/users/{userId}/accounts")
+	public String addAccount( @PathVariable Long userId) {
+		
+		System.out.println("booyah");
+	userService.addAccount(userId);
+		return "redirect:/users/{userId}";
+	}
 
 }

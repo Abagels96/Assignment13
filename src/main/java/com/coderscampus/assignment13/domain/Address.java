@@ -94,8 +94,8 @@ public class Address {
 
 	@Override
 	public String toString() {
-		return "addressLine1=" + addressLine1 + ", addressLine2=" + addressLine2 + ", city=" + city
-				+ ", region=" + region + ", country=" + country + ", zipCode=" + zipCode + "]";
+		return "addressLine1=" + addressLine1 + ", addressLine2=" + addressLine2 + ", city=" + city + ", region="
+				+ region + ", country=" + country + ", zipCode=" + zipCode + "]";
 	}
 
 }

@@ -25,6 +25,8 @@ public class UserService {
 	@Autowired
 	private AccountRepository accountRepo;
 
+	List<Account> accounts;
+
 	public Set<User> findAll() {
 		return userRepo.findAllUsersWithAccountsAndAddresses();
 	}
@@ -40,16 +42,19 @@ public class UserService {
 		return userRepo.save(user);
 	}
 
-	public void addAccount(User user) {
-		 
-			Account newAccount = new Account();
-			newAccount.getUsers().add(user);
-			user.getAccounts().add(newAccount);
-			accountRepo.save(newAccount);
-			userRepo.save(user);
+	public Account addAccount(Long userId) {
+		User user = userRepo.findById(userId).orElseThrow();
+		System.out.println(user);
+		Account newAccount = new Account();
+
+		newAccount.getUsers().add(user);
+		user.getAccounts().add(newAccount);
 
 		
-
+		accountRepo.saveAndFlush(newAccount);
+		System.out.println(newAccount);
+    newAccount.setAccountName("Account # + newAccount.getAccountId()");
+		return accountRepo.save(newAccount);
 	}
 
 	public Address addAddress(User user) {
@@ -59,7 +64,7 @@ public class UserService {
 
 		user.setAddress(address);
 		addressRepo.save(address);
-        
+
 		return address;
 	}
 
@@ -67,47 +72,36 @@ public class UserService {
 		userRepo.deleteById(userId);
 	}
 
-	
-
 	public void update(Long userId, User newUser) {
 		System.out.println("hello");
-	User user = userRepo.findById(userId).orElseThrow();// add exception but this 
-	// line selects the user in the database by Id and then I vainly try to edit it in the browser.
+		User user = userRepo.findById(userId).orElseThrow();// add exception but this
+		// line selects the user in the database by Id and then I vainly try to edit it
+		// in the browser.
 
-	user.setName(newUser.getName());
-	user.setUsername(newUser.getUsername());
-	user.setPassword(newUser.getPassword());
-	
-	 
-	System.out.println(user);// this should print the user displayed in the browser
-		Address userAddress= user.getAddress();
-		Address newUserAddress= newUser.getAddress();
-		
-		
-		if (userAddress== null) {
-			Address address= new Address();
+		user.setName(newUser.getName());
+		user.setUsername(newUser.getUsername());
+		user.setPassword(newUser.getPassword());
+
+		System.out.println(user);// this should print the user displayed in the browser
+		Address userAddress = user.getAddress();
+		Address newUserAddress = newUser.getAddress();
+
+		if (userAddress == null) {
+			Address address = new Address();
 			address.setUser(user);// check if address is null and loads a new address needs to save it
 			user.setAddress(address); // set new address to user object loaded from the form?
 			System.out.println(address);
 		}
-		// always use the db object not the form object 
-	userAddress.setAddressLine1(newUserAddress.getAddressLine1());
-	userAddress.setAddressLine2(newUserAddress.getAddressLine2());
-	userAddress.setRegion(newUserAddress.getRegion());
-	userAddress.setCity(newUserAddress.getCity());
-	userAddress.setCountry(newUserAddress.getCountry());
-	userAddress.setZipCode(newUserAddress.getZipCode());
-		 
+		// always use the db object not the form object
+		userAddress.setAddressLine1(newUserAddress.getAddressLine1());
+		userAddress.setAddressLine2(newUserAddress.getAddressLine2());
+		userAddress.setRegion(newUserAddress.getRegion());
+		userAddress.setCity(newUserAddress.getCity());
+		userAddress.setCountry(newUserAddress.getCountry());
+		userAddress.setZipCode(newUserAddress.getZipCode());
+
 		userRepo.save(user); // the full user object is saved
-		
-
-		
-		
-		}
-
-
-		
 
 	}
 
-
+}
