@@ -43,17 +43,20 @@ public class UserService {
 	}
 
 	public Account addAccount(Long userId) {
+		
 		User user = userRepo.findById(userId).orElseThrow();
 		System.out.println(user);
 		Account newAccount = new Account();
 
 		newAccount.getUsers().add(user);
 		user.getAccounts().add(newAccount);
+		int accountNumber = user.getAccounts().size();
 
 		
 		accountRepo.saveAndFlush(newAccount);
-		System.out.println(newAccount);
-    newAccount.setAccountName("Account # + newAccount.getAccountId()");
+    newAccount.setAccountName("Account # "+ accountNumber);
+	
+    System.out.println(newAccount);
 		return accountRepo.save(newAccount);
 	}
 

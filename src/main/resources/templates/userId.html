@@ -55,19 +55,11 @@
 		method="post">
 		<h2>Accounts</h2>
 
-		<div th:each="account: ${accounts}"th:if="${#lists.size(accounts)>10}">
-			<span  th:text="${account.accountName}"></span><br>
-			<span th:text="${account.accountName}"></span>
-			<span th:text="${account.accountName}"></span>
-			<span th:text="${account.accountName}"></span>
-			<span th:text="${account.accountName}"></span>
-			<span th:text="${account.accountName}"></span>
-			<span th:text="${account.accountName}"></span>
-			<span th:text="${account.accountName}"></span>
-			<span th:text="${account.accountName}"></span>
-			<span th:text="${account.accountName}"></span>
+		<div th:each="account: ${accounts}"th:if="${#lists.size(accounts)>1}">
+			<a th:href="@{/users/{userId}/accounts/name}"><span  th:text="${account.accountName}"></span></a><br>
 			
-			<span th:if="${#lists.size(accounts)=0}"></span>
+			
+			<span th:unless="${#lists.size(accounts)>1}">"Nothing to see here"</span>
 
 
 		</div>
