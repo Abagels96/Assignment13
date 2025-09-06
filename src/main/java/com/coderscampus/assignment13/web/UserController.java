@@ -3,6 +3,7 @@ package com.coderscampus.assignment13.web;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,9 +84,21 @@ public class UserController {
 	@PostMapping("/users/{userId}/accounts")
 	public String addAccount( @PathVariable Long userId) {
 		
-		System.out.println("booyah");
 	userService.addAccount(userId);
 		return "redirect:/users/{userId}";
 	}
 
-}
+	
+	@GetMapping("/users/{userId}/accounts/{accountId}")
+		public String renameAccount(ModelMap model,@PathVariable Long accountId ) {
+		Account specificAccount =  userService.renameAccount(accountId).orElseThrow();
+		System.out.println(specificAccount);
+		// what do I need to show up? I think that I need to put one account 
+			model.put("account", specificAccount);
+			return "accountRename";
+		}
+	
+	// need a post request to show the new name of the account and to save it within the account object.
+	}
+	
+

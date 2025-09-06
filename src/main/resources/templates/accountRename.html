@@ -4,8 +4,18 @@
 <title>Specific Users</title>
 </head>
 <body>
+<h2> <span th:text="${account.accountName}"></span>
+</h2>
 
+<form >
+<div>
+Name <input type="text" th:field="${account.accountName}">
 
+<br>
+<button type="submit">Change Name Now?</button>
+
+</div>
+</form>
 
 
 

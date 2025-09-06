@@ -104,7 +104,14 @@ public class UserService {
 		userAddress.setZipCode(newUserAddress.getZipCode());
 
 		userRepo.save(user); // the full user object is saved
-
+		
+		
+	
+		 
+	 }
+ public Optional<Account> renameAccount(Long accountId) {
+	 return accountRepo.findById(accountId);
+	 
 	}
 
 }
