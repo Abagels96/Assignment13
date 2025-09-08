@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
 <head>
-<title>Specific Users</title>
+<title>Rename Accounts</title>
 </head>
 <body>
 <h2> <span th:text="${account.accountName}"></span>
 </h2>
 
-<form >
+<form th:action="@{/users/{userId}/accounts/{accountId}(accountId=${account.accountId})}" method="post" >
 <div>
 Name <input type="text" th:field="${account.accountName}">
 
@@ -15,8 +15,11 @@ Name <input type="text" th:field="${account.accountName}">
 <button type="submit">Change Name Now?</button>
 
 </div>
-</form>
 
+  
+
+</form>
+<a th:href="@{/users/{userId}(userId=${user.userId})}"><span>Back</span></a> 
 
 
 

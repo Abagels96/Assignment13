@@ -109,8 +109,15 @@ public class UserService {
 	
 		 
 	 }
- public Optional<Account> renameAccount(Long accountId) {
-	 return accountRepo.findById(accountId);
+	 public Account selectAccount(Long accountId) {
+		 return accountRepo.findById(accountId).orElseThrow();
+	 }
+ public Account renameAccount(Long accountId,String newName) {
+	Account account= accountRepo.findById(accountId).orElseThrow();
+	
+	account.setAccountName(newName);
+	
+	return account;
 	 
 	}
 

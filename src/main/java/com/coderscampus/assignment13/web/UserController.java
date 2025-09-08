@@ -26,7 +26,6 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-
 	@GetMapping("/register")
 	public String getCreateUser(ModelMap model) {
 		User user = new User();
@@ -38,7 +37,6 @@ public class UserController {
 
 	@PostMapping("/register")
 	public String postCreateUser(User user) {
-		System.out.println(user);
 		if (user.getAddress() != null) {
 			userService.addAddress(user);
 		}
@@ -70,7 +68,6 @@ public class UserController {
 
 	@PostMapping("/users/{userId}") // probably the culprit to this problem
 	public String postOneUser(@PathVariable Long userId, @ModelAttribute User user) {
-		System.out.println(user);
 		userService.update(userId, user);
 		return "redirect:/users";
 	}
@@ -82,23 +79,30 @@ public class UserController {
 	}
 
 	@PostMapping("/users/{userId}/accounts")
-	public String addAccount( @PathVariable Long userId) {
-		
-	userService.addAccount(userId);
+	public String addAccount(@PathVariable Long userId) {
+
+		userService.addAccount(userId);
 		return "redirect:/users/{userId}";
 	}
 
-	
 	@GetMapping("/users/{userId}/accounts/{accountId}")
-		public String renameAccount(ModelMap model,@PathVariable Long accountId ) {
-		Account specificAccount =  userService.renameAccount(accountId).orElseThrow();
+	public String renameAccount(ModelMap model, @PathVariable Long accountId) {
+		Account specificAccount = userService.selectAccount(accountId);
 		System.out.println(specificAccount);
-		// what do I need to show up? I think that I need to put one account 
-			model.put("account", specificAccount);
-			return "accountRename";
-		}
-	
-	// need a post request to show the new name of the account and to save it within the account object.
+		User newUsers = specificAccount.getUsers().get(0);
+		System.out.println(newUsers);
+		model.put("user", newUsers);
+		model.put("account", specificAccount);
+		return "accountRename";
 	}
-	
 
+	@PostMapping("/users/{userId}/accounts/{accountId}")
+	public String saveNewNameOfAccount(@PathVariable Long accountId) {
+		Account specificAccount = userService.selectAccount(accountId);
+		String name= specificAccount.getAccountName();
+		userService.renameAccount(accountId,name);
+		return "redirect:/users/{userId}";
+	}
+	// need a post request to show the new name of the account and to save it within
+	// the account object.
+}

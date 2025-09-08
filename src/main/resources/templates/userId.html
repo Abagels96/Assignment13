@@ -55,17 +55,18 @@
 		method="post">
 		<h2>Accounts</h2>
 
-		<div th:each="account: ${accounts}"th:if="${#lists.size(accounts)>1}">
+		<div th:each="account: ${accounts}"th:if="${#lists.size(accounts)>0}">
 			<a th:href="@{/users/{userId}/accounts/{accountId}(accountId=${account.accountId})}"><span  th:text="${account.accountName}"></span></a><br>
 			
 			
-			<span th:unless="${#lists.size(accounts)>1}">"Nothing to see here"</span>
+			<span th:unless="${#lists.size(accounts)>0}">"Nothing to see here"</span>
 
 
 		</div>
 		<button type="submit">Add Account</button>
 	
 	</form>
+<a th:href="@{/users}"><span>Back</span></a> 
 
 
 </body>
