@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.coderscampus.assignment13.domain.Account;
 //import com.coderscampus.assignment13.domain.Account;
@@ -82,26 +83,30 @@ public class UserController {
 	public String addAccount(@PathVariable Long userId) {
 
 		userService.addAccount(userId);
-		return "redirect:/users/{userId}";
+		return "redirect:/users/" + userId;
 	}
 
 	@GetMapping("/users/{userId}/accounts/{accountId}")
-	public String renameAccount(ModelMap model, @PathVariable Long accountId) {
+	public String renameAccount(ModelMap model, @PathVariable Long accountId, @PathVariable Long userId) {
+		System.out.println("made it!");
 		Account specificAccount = userService.selectAccount(accountId);
 		System.out.println(specificAccount);
-		User newUsers = specificAccount.getUsers().get(0);
-		System.out.println(newUsers);
-		model.put("user", newUsers);
+		
+		User newUser = userService.findById(userId);
+		 
+		System.out.println(newUser);
+		model.put("user", newUser);
 		model.put("account", specificAccount);
 		return "accountRename";
 	}
 
 	@PostMapping("/users/{userId}/accounts/{accountId}")
-	public String saveNewNameOfAccount(@PathVariable Long accountId) {
-		Account specificAccount = userService.selectAccount(accountId);
-		String name= specificAccount.getAccountName();
-		userService.renameAccount(accountId,name);
-		return "redirect:/users/{userId}";
+	public String saveNewNameOfAccount(@PathVariable Long accountId, @PathVariable Long userId, @RequestParam("accountName") String newName) {
+		System.out.println("hellooo");
+
+		userService.renameAccount(accountId,newName);
+// actually get name to update now that we have got it to reference everything needed. last step is fixing the address
+		return "redirect:/users/" + userId;
 	}
 	// need a post request to show the new name of the account and to save it within
 	// the account object.

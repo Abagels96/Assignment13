@@ -56,7 +56,7 @@
 		<h2>Accounts</h2>
 
 		<div th:each="account: ${accounts}"th:if="${#lists.size(accounts)>0}">
-			<a th:href="@{/users/{userId}/accounts/{accountId}(accountId=${account.accountId})}"><span  th:text="${account.accountName}"></span></a><br>
+			<a th:href="@{/users/{userId}/accounts/{accountId}(userId=${user.userId},accountId=${account.accountId})}"><span  th:text="${account.accountName}"></span></a><br>
 			
 			
 			<span th:unless="${#lists.size(accounts)>0}">"Nothing to see here"</span>

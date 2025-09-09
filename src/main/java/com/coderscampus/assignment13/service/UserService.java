@@ -45,7 +45,6 @@ public class UserService {
 	public Account addAccount(Long userId) {
 		
 		User user = userRepo.findById(userId).orElseThrow();
-		System.out.println(user);
 		Account newAccount = new Account();
 
 		newAccount.getUsers().add(user);
@@ -112,11 +111,11 @@ public class UserService {
 	 public Account selectAccount(Long accountId) {
 		 return accountRepo.findById(accountId).orElseThrow();
 	 }
- public Account renameAccount(Long accountId,String newName) {
+ public Account renameAccount(Long accountId, String newName) {
 	Account account= accountRepo.findById(accountId).orElseThrow();
 	
-	account.setAccountName(newName);
-	
+account.setAccountName(newName);	
+accountRepo.save(account);
 	return account;
 	 
 	}
