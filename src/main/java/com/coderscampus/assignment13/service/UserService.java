@@ -84,7 +84,6 @@ public class UserService {
 		user.setUsername(newUser.getUsername());
 		user.setPassword(newUser.getPassword());
 
-		System.out.println(user);// this should print the user displayed in the browser
 		Address userAddress = user.getAddress();
 		Address newUserAddress = newUser.getAddress();
 

@@ -2,36 +2,30 @@
 <html xmlns:th="http://thymeleaf.org">
 <head>
 <title>Create Account</title>
+ <link rel="stylesheet" th:href="@{/styles/cssandjs/NewFile.css}"  type="text/css"/>
+
 </head>
 <body>
 	<h1>Create Your Account</h1>
 
 	<form action="/register" method="post" th:object="${user}">
-		<div>
+		<div class="form-container">
 			Username: <input type="text" th:field="*{username}" />
-		</div>
-		<div>
+		
 			Password: <input type="password" th:field="*{password}" />
-		</div>
-		<div>
+		
 			Full Name: <input type="text" th:field="*{name}" />
-		</div>
-		<div>
+		
 			Address Line 1: <input type="text" th:field="*{address.addressLine1}" />
-		</div>
-		<div>
+		
 			Address Line 2: <input type="text" th:field="*{address.addressLine2}" />
-		</div>
-		<div>
+		
 			City: <input type="text" th:field="*{address.city}" />
-		</div>
-		<div>
+		
 			Region: <input type="text" th:field="*{address.region}" />
-		</div>
-		<div>
+		
 			Country: <input type="text" th:field="*{address.country}" />
-		</div>
-		<div>
+		
 			Zip Code: <input type="text" th:field="*{address.zipCode}" />
 		</div>
 		<br>

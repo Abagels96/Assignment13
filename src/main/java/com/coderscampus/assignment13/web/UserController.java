@@ -101,7 +101,8 @@ public class UserController {
 	}
 
 	@PostMapping("/users/{userId}/accounts/{accountId}")
-	public String saveNewNameOfAccount(@PathVariable Long accountId, @PathVariable Long userId, @RequestParam("accountName") String newName) {
+	public String saveNewNameOfAccount(@PathVariable Long accountId, @PathVariable Long userId,
+			@RequestParam("accountName") String newName) {
 		System.out.println("hellooo");
 
 		userService.renameAccount(accountId,newName);
