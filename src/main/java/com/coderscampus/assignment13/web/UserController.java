@@ -47,10 +47,12 @@ public class UserController {
 	@GetMapping("/users")
 	public String getAllUsers(ModelMap model) {
 		Set<User> users = userService.findAll();
-
+      
 		model.put("users", users);
 		if (users.size() == 1) {
 			model.put("user", users.iterator().next());
+			
+
 		}
 
 		return "users";
@@ -88,13 +90,10 @@ public class UserController {
 
 	@GetMapping("/users/{userId}/accounts/{accountId}")
 	public String renameAccount(ModelMap model, @PathVariable Long accountId, @PathVariable Long userId) {
-		System.out.println("made it!");
 		Account specificAccount = userService.selectAccount(accountId);
-		System.out.println(specificAccount);
 		
 		User newUser = userService.findById(userId);
 		 
-		System.out.println(newUser);
 		model.put("user", newUser);
 		model.put("account", specificAccount);
 		return "accountRename";
@@ -103,7 +102,6 @@ public class UserController {
 	@PostMapping("/users/{userId}/accounts/{accountId}")
 	public String saveNewNameOfAccount(@PathVariable Long accountId, @PathVariable Long userId,
 			@RequestParam("accountName") String newName) {
-		System.out.println("hellooo");
 
 		userService.renameAccount(accountId,newName);
 // actually get name to update now that we have got it to reference everything needed. last step is fixing the address

@@ -1,44 +1,51 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
-	<head>
-		<title>Users</title>
-		 <link rel="stylesheet" th:href="@{/styles/cssandjs/styles.css}"  type="text/css"/>
-		
-	</head>
-	<body>
-		<h1>Users</h1>
-		
-		<div th:if="${#lists.size(users) == 1}">
-			<form action="" method="post">
-				<div>
-					Username: <input type="text" th:field="${user.username}" />
-				</div>
-				<div>
-					Password: <input type="password" th:field="${user.password}" />
-				</div>
-				<div>
-					Full Name: <input type="text" th:field="${user.name}" />
-				</div>
-				<div>
-					<input type="submit" value="Update User Account" />
-				</div>
-			</form>
-			<form th:action="@{/users/{userId}/delete(userId=${user.userId})}" method="post">
-				<input type="submit" value="Delete User Account" />
-			</form>
-		</div>
-		
-		<div th:unless="${#lists.size(users) == 1}" th:each="user : ${users}">
-		   <a th:href="@{/users/{userId}(userId=${user.userId})}"> <span th:text="${user.userId}"></span></a><br/>
-			<span th:text="${user.username}"></span><br/>
-			<span th:text="${user.name}"></span><br/>
-			<span th:text="${user.password}"></span>
-<!-- 			<div th:each="address : ${user.address}"></div> -->
-<!-- 			<span th:text= "${address." -->
-			<div th:each="account : ${user.accounts}">
-				<span th:text="${account.accountName}"></span>
+<head>
+<title>Users</title>
+<link rel="stylesheet" th:href="@{/styles/cssandjs/styles.css}"
+	type="text/css" />
+
+</head>
+<body>
+	<h1>Users</h1>
+
+	<div th:if="${#lists.size(users) == 1}">
+		<form action="" method="post">
+			<div>
+				Username: <input type="text" th:field="${user.username}" />
 			</div>
-			<hr/>
+			<div>
+				Password: <input type="password" th:field="${user.password}" />
+			</div>
+			<div>
+				Full Name: <input type="text" th:field="${user.name}" />
+			</div>
+			<div>
+				<input type="submit" value="Update User Account" />
+			</div>
+		</form>
+		<form th:action="@{/users/{userId}/delete(userId=${user.userId})}"
+			method="post">
+			<input type="submit" value="Delete User Account" />
+		</form>
+	</div>
+
+	<div th:unless="${#lists.size(users) == 1}" th:each="user : ${users}">
+		<a th:href="@{/users/{userId}(userId=${user.userId})}"> <span
+			th:text="${user.userId}"></span></a><br /> <span
+			th:text="${user.username}"></span><br /> <span th:text="${user.name}"></span><br />
+		<span th:text="${user.password}"></span> 
+		<div th:each="address: ${user.address}">
+		<span
+			th:text="${address.addressLine1}"></span> <span
+			th:text="${address.addressLine2}"></span> <span
+			th:text="${address. city}"></span> <span th:text="${address.region}"></span>
+		<span th:text="${address.country}"></span> <span
+			th:text="${address.zipCode}"></span>
+		<div th:each="account : ${user.accounts}">
+			<span th:text="${account.accountName}"></span></div>
 		</div>
-	</body>
+		<hr />
+	</div>
+</body>
 </html>

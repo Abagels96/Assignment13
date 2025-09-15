@@ -43,7 +43,7 @@ public class UserService {
 	}
 
 	public Account addAccount(Long userId) {
-		
+
 		User user = userRepo.findById(userId).orElseThrow();
 		Account newAccount = new Account();
 
@@ -51,22 +51,19 @@ public class UserService {
 		user.getAccounts().add(newAccount);
 		int accountNumber = user.getAccounts().size();
 
-		
 		accountRepo.saveAndFlush(newAccount);
-    newAccount.setAccountName("Account # "+ accountNumber);
-	
-    System.out.println(newAccount);
+		newAccount.setAccountName("Account # " + accountNumber);
+
+		System.out.println(newAccount);
 		return accountRepo.save(newAccount);
 	}
 
 	public Address addAddress(User user) {
 
-		Address address = new Address();// address is null for some reason and it is irritating for sure
+		Address address = new Address();
 		address.setUser(user);
-
 		user.setAddress(address);
 		addressRepo.save(address);
-
 		return address;
 	}
 
@@ -76,47 +73,40 @@ public class UserService {
 
 	public void update(Long userId, User newUser) {
 		System.out.println("hello");
-		User user = userRepo.findById(userId).orElseThrow();// add exception but this
-		// line selects the user in the database by Id and then I vainly try to edit it
-		// in the browser.
-
+		User user = userRepo.findById(userId).orElseThrow();
 		user.setName(newUser.getName());
 		user.setUsername(newUser.getUsername());
 		user.setPassword(newUser.getPassword());
-
 		Address userAddress = user.getAddress();
 		Address newUserAddress = newUser.getAddress();
 
 		if (userAddress == null) {
-			Address address = new Address();
-			address.setUser(user);// check if address is null and loads a new address needs to save it
-			user.setAddress(address); // set new address to user object loaded from the form?
-			System.out.println(address);
+			userAddress = new Address();
+			userAddress.setUser(user);
+			user.setAddress(userAddress);
+			
 		}
-		// always use the db object not the form object
 		userAddress.setAddressLine1(newUserAddress.getAddressLine1());
 		userAddress.setAddressLine2(newUserAddress.getAddressLine2());
 		userAddress.setRegion(newUserAddress.getRegion());
 		userAddress.setCity(newUserAddress.getCity());
 		userAddress.setCountry(newUserAddress.getCountry());
 		userAddress.setZipCode(newUserAddress.getZipCode());
+System.out.println(userAddress);
+		userRepo.save(user); 
 
-		userRepo.save(user); // the full user object is saved
-		
-		
-	
-		 
-	 }
-	 public Account selectAccount(Long accountId) {
-		 return accountRepo.findById(accountId).orElseThrow();
-	 }
- public Account renameAccount(Long accountId, String newName) {
-	Account account= accountRepo.findById(accountId).orElseThrow();
-	
-account.setAccountName(newName);	
-accountRepo.save(account);
-	return account;
-	 
+	}
+
+	public Account selectAccount(Long accountId) {
+		return accountRepo.findById(accountId).orElseThrow();
+	}
+
+	public Account renameAccount(Long accountId, String newName) {
+		Account account = accountRepo.findById(accountId).orElseThrow();
+		account.setAccountName(newName);
+		accountRepo.save(account);
+		return account;
+
 	}
 
 }
