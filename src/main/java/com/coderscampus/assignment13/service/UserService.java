@@ -43,17 +43,13 @@ public class UserService {
 	}
 
 	public Account addAccount(Long userId) {
-
 		User user = userRepo.findById(userId).orElseThrow();
 		Account newAccount = new Account();
-
 		newAccount.getUsers().add(user);
 		user.getAccounts().add(newAccount);
 		int accountNumber = user.getAccounts().size();
-
 		accountRepo.saveAndFlush(newAccount);
 		newAccount.setAccountName("Account # " + accountNumber);
-
 		System.out.println(newAccount);
 		return accountRepo.save(newAccount);
 	}
@@ -72,7 +68,6 @@ public class UserService {
 	}
 
 	public void update(Long userId, User newUser) {
-		System.out.println("hello");
 		User user = userRepo.findById(userId).orElseThrow();
 		user.setName(newUser.getName());
 		user.setUsername(newUser.getUsername());
@@ -92,7 +87,6 @@ public class UserService {
 		userAddress.setCity(newUserAddress.getCity());
 		userAddress.setCountry(newUserAddress.getCountry());
 		userAddress.setZipCode(newUserAddress.getZipCode());
-System.out.println(userAddress);
 		userRepo.save(user); 
 
 	}
