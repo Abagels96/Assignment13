@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import com.coderscampus.assignment13.repository.AddressRepository;
 import com.coderscampus.assignment13.repository.UserRepository;
 
 @Service
+@Transactional
 public class UserService {
 
 	@Autowired
@@ -50,20 +53,20 @@ public class UserService {
 		int accountNumber = user.getAccounts().size();
 		accountRepo.saveAndFlush(newAccount);
 		newAccount.setAccountName("Account # " + accountNumber);
-		System.out.println(newAccount);
 		return accountRepo.save(newAccount);
 	}
 
-	public Address addAddress(User user) {
+	public void addAddress(User user, Address address) {
 
-		Address address = new Address();
 		address.setUser(user);
 		user.setAddress(address);
+		
 		addressRepo.save(address);
-		return address;
 	}
 
 	public void delete(Long userId) {
+		System.out.println("I'm here as well");
+		System.out.println(userId);
 		userRepo.deleteById(userId);
 	}
 

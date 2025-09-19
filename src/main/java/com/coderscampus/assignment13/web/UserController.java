@@ -1,9 +1,6 @@
 package com.coderscampus.assignment13.web;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.coderscampus.assignment13.domain.Account;
-//import com.coderscampus.assignment13.domain.Account;
 import com.coderscampus.assignment13.domain.Address;
 import com.coderscampus.assignment13.domain.User;
 import com.coderscampus.assignment13.service.UserService;
@@ -30,18 +26,16 @@ public class UserController {
 	@GetMapping("/register")
 	public String getCreateUser(ModelMap model) {
 		User user = new User();
-		List<Account> accounts = new ArrayList<>();
-		model.put("accounts", accounts);
 		model.put("user", user);
 		return "register";
 	}
 
 	@PostMapping("/register")
 	public String postCreateUser(User user) {
-		if (user.getAddress() != null) {
-			userService.addAddress(user);
-		}
-		return "redirect:/register";
+		Address address= user.getAddress();
+		userService.addAddress(user,address);
+		
+		return "redirect:/users";
 	}
 
 	@GetMapping("/users")
@@ -68,7 +62,7 @@ public class UserController {
 		return "userId";
 	}
 
-	@PostMapping("/users/{userId}") // probably the culprit to this problem
+	@PostMapping("/users/{userId}") 
 	public String postOneUser(@PathVariable Long userId, @ModelAttribute User user) {
 		userService.update(userId, user);
 		return "redirect:/users";
@@ -76,9 +70,12 @@ public class UserController {
 
 	@PostMapping("/users/{userId}/delete")
 	public String deleteOneUser(@PathVariable Long userId) {
+		System.out.println(userId);
+		System.out.println("I'm here");
 		userService.delete(userId);
 		return "redirect:/users";
 	}
+	// it is not deleting at all 
 
 	@PostMapping("/users/{userId}/accounts")
 	public String addAccount(@PathVariable Long userId) {
@@ -99,9 +96,7 @@ public class UserController {
 	public String saveNewNameOfAccount(@PathVariable Long accountId, @PathVariable Long userId,
 			@RequestParam("accountName") String newName) {
 		userService.renameAccount(accountId, newName);
-// actually get name to update now that we have got it to reference everything needed. last step is fixing the address
 		return "redirect:/users/" + userId;
 	}
-	// need a post request to show the new name of the account and to save it within
-	// the account object.
+	
 }

@@ -16,7 +16,7 @@
 			Username: <input type="text" th:field="*{username}" />
 		
 		
-			Password: <input type="password" th:field="*{password}" />
+			Password: <input type="text" th:field="*{password}" />
 	
 			Full Name: <input type="text" th:field="*{name}" />
 				</div>
@@ -44,7 +44,6 @@
 	<div class="form-container">
 	<form th:action="@{/users/{userId}/delete(userId=${user.userId})}"
 		method="post">
-		<input type="hidden" name="_method" value="delete" />
 		<button type="submit" id="submitButton">Delete Account</button>
 	</form>
 </div>

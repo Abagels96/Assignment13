@@ -79,7 +79,7 @@ public class User {
 		this.accounts = accounts;
 	}
 
-	@OneToOne(mappedBy = "user", cascade = CascadeType.MERGE)
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	@JoinColumn(name = "address_id")
 	public Address getAddress() {
 		return address;
