@@ -75,12 +75,9 @@ public class UserController {
 
 	@PostMapping("/users/{userId}/delete")
 	public String deleteOneUser(@PathVariable Long userId) {
-		System.out.println(userId);
-		System.out.println("I'm here");
 		userService.delete(userId);
 		return "redirect:/users";
 	}
-	// it is not deleting at all 
 
 	@PostMapping("/users/{userId}/accounts")
 	public String addAccount(@PathVariable Long userId) {
