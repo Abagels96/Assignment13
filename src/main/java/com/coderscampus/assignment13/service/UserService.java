@@ -67,7 +67,6 @@ public class UserService {
 	}
 
 	public void delete(Long userId) {
-		System.out.println("I'm here as well");
 		System.out.println(userId);
 		userRepo.deleteById(userId);
 	}
