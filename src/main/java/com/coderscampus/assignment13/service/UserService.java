@@ -20,13 +20,15 @@ import com.coderscampus.assignment13.repository.UserRepository;
 @Service
 @Transactional
 public class UserService {
+	private final UserRepository userRepo;
+	private final AddressRepository addressRepo;
+	private final AccountRepository accountRepo;
 
-	@Autowired
-	private UserRepository userRepo;
-	@Autowired
-	private AddressRepository addressRepo;
-	@Autowired
-	private AccountRepository accountRepo;
+	public UserService(UserRepository userRepo, AddressRepository addressRepo, AccountRepository accountRepo) {
+		this.userRepo = userRepo;
+		this.addressRepo = addressRepo;
+		this.accountRepo = accountRepo;
+	}
 
 	List<Account> accounts;
 
@@ -60,7 +62,7 @@ public class UserService {
 
 		address.setUser(user);
 		user.setAddress(address);
-		
+
 		addressRepo.save(address);
 	}
 
@@ -82,7 +84,7 @@ public class UserService {
 			userAddress = new Address();
 			userAddress.setUser(user);
 			user.setAddress(userAddress);
-			
+
 		}
 		userAddress.setAddressLine1(newUserAddress.getAddressLine1());
 		userAddress.setAddressLine2(newUserAddress.getAddressLine2());
@@ -90,7 +92,7 @@ public class UserService {
 		userAddress.setCity(newUserAddress.getCity());
 		userAddress.setCountry(newUserAddress.getCountry());
 		userAddress.setZipCode(newUserAddress.getZipCode());
-		userRepo.save(user); 
+		userRepo.save(user);
 
 	}
 

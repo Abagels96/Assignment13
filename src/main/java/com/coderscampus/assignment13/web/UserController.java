@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +17,16 @@ import com.coderscampus.assignment13.domain.Account;
 import com.coderscampus.assignment13.domain.Address;
 import com.coderscampus.assignment13.domain.User;
 import com.coderscampus.assignment13.service.UserService;
-
+@Component
 @Controller
 public class UserController {
 
-	@Autowired
-	private UserService userService;
+	
+	private  final UserService userService;
+	
+	public UserController(UserService userService) {
+		this.userService=userService;
+	}
 
 	@GetMapping("/register")
 	public String getCreateUser(ModelMap model) {
